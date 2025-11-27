@@ -27,7 +27,7 @@ const Topbar = () => {
     };
 
     return (
-        <header className="topbar glass-panel">
+        <header className="topbar">
             <div className="breadcrumbs">
                 {/* Breadcrumbs could go here */}
             </div>
@@ -35,21 +35,21 @@ const Topbar = () => {
                 <button className="btn-icon" onClick={toggleTheme} title="Toggle Theme">
                     {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                 </button>
-                <button className="btn-primary" onClick={handlePanic} style={{ background: 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)', boxShadow: '0 4px 15px rgba(239, 68, 68, 0.3)' }}>
+                <button className="btn-primary" onClick={handlePanic} style={{ background: 'var(--error-color)', boxShadow: 'none' }}>
                     <AlertTriangle size={18} />
                     <span>Panic</span>
                 </button>
                 <div className="profile-icon" style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '12px',
-                    background: 'rgba(255, 255, 255, 0.1)',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    background: 'var(--bg-tertiary)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                    color: 'var(--text-secondary)'
                 }}>
-                    <User size={20} color="var(--text-secondary)" />
+                    <User size={18} />
                 </div>
             </div>
         </header>

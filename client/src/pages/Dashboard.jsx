@@ -6,224 +6,177 @@ import '../styles/animations.css';
 const Dashboard = () => {
     return (
         <div className="dashboard fade-in">
-            <div className="page-header">
-                <div>
-                    <h1 className="page-title">Dashboard</h1>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', marginTop: '8px' }}>
-                        Manage your temporary services
-                    </p>
+            {/* Hero Section */}
+            <div className="hero-section" style={{
+                textAlign: 'center',
+                padding: '60px 0 80px',
+                maxWidth: '800px',
+                margin: '0 auto'
+            }}>
+                <h1 style={{
+                    fontSize: '3.5rem',
+                    fontWeight: '500',
+                    marginBottom: '24px',
+                    lineHeight: '1.2',
+                    color: 'var(--text-primary)'
+                }}>
+                    Privacy tools for the <span style={{ color: 'var(--accent-color)' }}>modern web</span>
+                </h1>
+                <p style={{
+                    fontSize: '1.25rem',
+                    color: 'var(--text-secondary)',
+                    lineHeight: '1.6',
+                    marginBottom: '40px'
+                }}>
+                    Generate temporary identities instantly. Protect your privacy with disposable email, phone numbers, and virtual cards.
+                </p>
+                <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+                    <Link to="/email" className="btn-primary" style={{ padding: '12px 32px', fontSize: '1rem' }}>
+                        Get Started
+                    </Link>
+                    <Link to="/settings" className="btn-secondary" style={{ padding: '12px 32px', fontSize: '1rem' }}>
+                        Configure
+                    </Link>
                 </div>
             </div>
 
-            
-
-            {/* Main Service Cards */}
-            <div className="grid-container" style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-                gap: '24px',
-                marginBottom: '32px'
+            {/* Feature Cards (Pricing Style) */}
+            <div className="grid-container" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '32px',
+                marginBottom: '64px'
             }}>
-                <Link 
-                    to="/email" 
-                    className="glass-card delay-1 slide-in-up" 
-                    style={{ 
-                        textDecoration: 'none', 
+                {/* Email Card */}
+                <Link
+                    to="/email"
+                    className="card feature-card delay-1 slide-in-up"
+                    style={{
+                        textDecoration: 'none',
                         color: 'inherit',
-                        padding: '32px',
-                        position: 'relative',
-                        overflow: 'hidden'
+                        padding: '40px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        borderTop: '4px solid var(--accent-color)' // Highlight
                     }}
                 >
-                    <div style={{ 
-                        width: '64px', 
-                        height: '64px',
-                        background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.2) 0%, rgba(10, 132, 255, 0.1) 100%)',
-                        borderRadius: '18px',
+                    <div style={{ marginBottom: '24px', color: 'var(--accent-color)' }}>
+                        <Mail size={48} strokeWidth={1.5} />
+                    </div>
+                    <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Temp Email</h3>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', flex: 1 }}>
+                        Instant disposable email addresses. Real-time inbox with HTML support and OTP detection.
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, marginBottom: '32px', color: 'var(--text-secondary)' }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <Zap size={16} color="var(--success-color)" /> Real-time delivery
+                        </li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <Shield size={16} color="var(--success-color)" /> Spam protection
+                        </li>
+                    </ul>
+                    <div style={{
+                        color: 'var(--accent-color)',
+                        fontWeight: '500',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '20px',
-                        border: '1px solid rgba(0, 122, 255, 0.3)'
+                        gap: '8px'
                     }}>
-                        <Mail size={32} color="#007AFF" strokeWidth={2} />
-                    </div>
-                    <h3 style={{ 
-                        fontSize: '1.375rem', 
-                        fontWeight: '700', 
-                        marginBottom: '8px',
-                        letterSpacing: '-0.02em'
-                    }}>
-                        Temp Email
-                    </h3>
-                    <p style={{ 
-                        color: 'var(--text-secondary)', 
-                        lineHeight: '1.6',
-                        fontSize: '0.9375rem',
-                        marginBottom: '16px'
-                    }}>
-                        Generate disposable email addresses. Receive messages in real-time with full inbox management.
-                    </p>
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px',
-                        color: '#007AFF',
-                        fontWeight: '600',
-                        fontSize: '0.9375rem'
-                    }}>
-                        <span>Open Service</span>
-                        <ArrowRight size={18} />
+                        Open Inbox <ArrowRight size={18} />
                     </div>
                 </Link>
 
-                <Link 
-                    to="/phone" 
-                    className="glass-card delay-2 slide-in-up" 
-                    style={{ 
-                        textDecoration: 'none', 
+                {/* Phone Card */}
+                <Link
+                    to="/phone"
+                    className="card feature-card delay-2 slide-in-up"
+                    style={{
+                        textDecoration: 'none',
                         color: 'inherit',
-                        padding: '32px',
-                        position: 'relative',
-                        overflow: 'hidden'
+                        padding: '40px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%'
                     }}
                 >
-                    <div style={{ 
-                        width: '64px', 
-                        height: '64px',
-                        background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.2) 0%, rgba(48, 209, 88, 0.1) 100%)',
-                        borderRadius: '18px',
+                    <div style={{ marginBottom: '24px', color: 'var(--warning-color)' }}>
+                        <Phone size={48} strokeWidth={1.5} />
+                    </div>
+                    <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Temp Phone</h3>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', flex: 1 }}>
+                        Virtual phone numbers for SMS verification. Receive codes instantly from any service.
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, marginBottom: '32px', color: 'var(--text-secondary)' }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <Zap size={16} color="var(--success-color)" /> Instant reception
+                        </li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <Shield size={16} color="var(--success-color)" /> Private numbers
+                        </li>
+                    </ul>
+                    <div style={{
+                        color: 'var(--accent-color)',
+                        fontWeight: '500',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '20px',
-                        border: '1px solid rgba(52, 199, 89, 0.3)'
+                        gap: '8px'
                     }}>
-                        <Phone size={32} color="#34c759" strokeWidth={2} />
-                    </div>
-                    <h3 style={{ 
-                        fontSize: '1.375rem', 
-                        fontWeight: '700', 
-                        marginBottom: '8px',
-                        letterSpacing: '-0.02em'
-                    }}>
-                        Temp Phone
-                    </h3>
-                    <p style={{ 
-                        color: 'var(--text-secondary)', 
-                        lineHeight: '1.6',
-                        fontSize: '0.9375rem',
-                        marginBottom: '16px'
-                    }}>
-                        Simulate SMS verification. Receive text messages instantly with virtual phone numbers.
-                    </p>
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px',
-                        color: '#34c759',
-                        fontWeight: '600',
-                        fontSize: '0.9375rem'
-                    }}>
-                        <span>Open Service</span>
-                        <ArrowRight size={18} />
+                        Open Phone <ArrowRight size={18} />
                     </div>
                 </Link>
 
-                <Link 
-                    to="/card" 
-                    className="glass-card delay-3 slide-in-up" 
-                    style={{ 
-                        textDecoration: 'none', 
+                {/* Card Card */}
+                <Link
+                    to="/card"
+                    className="card feature-card delay-3 slide-in-up"
+                    style={{
+                        textDecoration: 'none',
                         color: 'inherit',
-                        padding: '32px',
-                        position: 'relative',
-                        overflow: 'hidden'
+                        padding: '40px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%'
                     }}
                 >
-                    <div style={{ 
-                        width: '64px', 
-                        height: '64px',
-                        background: 'linear-gradient(135deg, rgba(94, 92, 230, 0.2) 0%, rgba(99, 97, 242, 0.1) 100%)',
-                        borderRadius: '18px',
+                    <div style={{ marginBottom: '24px', color: 'var(--error-color)' }}>
+                        <CreditCard size={48} strokeWidth={1.5} />
+                    </div>
+                    <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Virtual Card</h3>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', flex: 1 }}>
+                        Generate test credit cards for safe transactions. Simulate payments and authorizations.
+                    </p>
+                    <ul style={{ listStyle: 'none', padding: 0, marginBottom: '32px', color: 'var(--text-secondary)' }}>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <Zap size={16} color="var(--success-color)" /> Instant issuance
+                        </li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <Shield size={16} color="var(--success-color)" /> Secure details
+                        </li>
+                    </ul>
+                    <div style={{
+                        color: 'var(--accent-color)',
+                        fontWeight: '500',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '20px',
-                        border: '1px solid rgba(94, 92, 230, 0.3)'
+                        gap: '8px'
                     }}>
-                        <CreditCard size={32} color="#5e5ce6" strokeWidth={2} />
-                    </div>
-                    <h3 style={{ 
-                        fontSize: '1.375rem', 
-                        fontWeight: '700', 
-                        marginBottom: '8px',
-                        letterSpacing: '-0.02em'
-                    }}>
-                        Virtual Card
-                    </h3>
-                    <p style={{ 
-                        color: 'var(--text-secondary)', 
-                        lineHeight: '1.6',
-                        fontSize: '0.9375rem',
-                        marginBottom: '16px'
-                    }}>
-                        Generate test credit card numbers. Simulate transactions with virtual payment methods.
-                    </p>
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px',
-                        color: '#5e5ce6',
-                        fontWeight: '600',
-                        fontSize: '0.9375rem'
-                    }}>
-                        <span>Open Service</span>
-                        <ArrowRight size={18} />
+                        Open Wallet <ArrowRight size={18} />
                     </div>
                 </Link>
             </div>
 
             {/* Recent Activity Section */}
-            <div className="glass-card" style={{ padding: '32px' }}>
-                <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'space-between',
-                    marginBottom: '24px'
-                }}>
-                    <h3 style={{ 
-                        fontSize: '1.25rem', 
-                        fontWeight: '700',
-                        letterSpacing: '-0.02em'
-                    }}>
-                        Recent Activity
-                    </h3>
-                    <Clock size={20} color="var(--text-secondary)" />
-                </div>
-                <div style={{ 
-                    padding: '48px 20px', 
-                    textAlign: 'center', 
-                    color: 'var(--text-secondary)',
-                    background: 'rgba(0, 0, 0, 0.2)',
-                    borderRadius: '16px',
-                    border: '1px solid rgba(255, 255, 255, 0.05)'
-                }}>
-                    <Activity 
-                        size={48} 
-                        color="var(--text-secondary)" 
-                        style={{ 
-                            opacity: 0.3, 
-                            marginBottom: '16px',
-                            display: 'block',
-                            margin: '0 auto 16px auto'
-                        }} 
+            <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                <h3 style={{ marginBottom: '24px', fontSize: '1.25rem', color: 'var(--text-secondary)' }}>Recent Activity</h3>
+                <div className="card" style={{ padding: '48px', textAlign: 'center', background: 'var(--bg-secondary)', border: 'none' }}>
+                    <Activity
+                        size={48}
+                        color="var(--text-tertiary)"
+                        style={{ marginBottom: '16px', display: 'block', margin: '0 auto 16px auto' }}
                     />
-                    <p style={{ fontSize: '0.9375rem' }}>
+                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>
                         No recent activity to show.
-                    </p>
-                    <p style={{ fontSize: '0.8125rem', marginTop: '8px', opacity: 0.7 }}>
-                        Your activity will appear here once you start using services.
                     </p>
                 </div>
             </div>

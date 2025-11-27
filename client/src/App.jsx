@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import { connectSocket, disconnectSocket } from './modules/socket';
+import './styles/layout.css';
+import './styles/animations.css';
 import './index.css';
 
 function App() {

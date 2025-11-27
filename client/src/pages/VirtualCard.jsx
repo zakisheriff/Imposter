@@ -74,9 +74,9 @@ const VirtualCard = () => {
             </div>
 
             {!card ? (
-                <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '48px' }}>
+                <div className="empty-state card" style={{ textAlign: 'center', padding: '48px', maxWidth: '600px', margin: '40px auto' }}>
                     <div style={{ marginBottom: '24px', color: 'var(--accent-color)' }}>
-                        <CreditCard size={64} />
+                        <CreditCard size={64} strokeWidth={1.5} />
                     </div>
                     <h2 style={{ marginBottom: '12px' }}>No Active Card</h2>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
@@ -88,80 +88,72 @@ const VirtualCard = () => {
                     </button>
                 </div>
             ) : (
-                <div className="card-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                <div className="card-container">
                     <div className="card-section">
-                        <div className="glass-card" style={{ padding: '32px', display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-                            <CardView card={card} />
-                        </div>
+                        <CardView card={card} />
 
-                        <div className="card-controls glass-card">
-                            <div className="control-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                <span className="label" style={{ margin: 0 }}>Status</span>
-                                <span className={`status-badge ${card.locked ? 'locked' : 'active'}`} style={{
-                                    padding: '4px 12px',
-                                    borderRadius: '12px',
-                                    background: card.locked ? 'rgba(239, 68, 68, 0.2)' : 'rgba(34, 197, 94, 0.2)',
-                                    color: card.locked ? '#ef4444' : '#22c55e',
-                                    fontWeight: '600',
-                                    fontSize: '0.875rem'
-                                }}>
-                                    {card.locked ? 'Locked' : 'Active'}
-                                </span>
+                        <div className="transactions-list">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                                <Activity size={20} color="var(--accent-color)" />
+                                <h3 style={{ margin: 0, fontSize: '1.125rem' }}>Recent Transactions</h3>
                             </div>
-                            <div className="control-actions" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                                <button className="btn-secondary" onClick={toggleLock}>
-                                    {card.locked ? <Unlock size={16} /> : <Lock size={16} />}
-                                    <span>{card.locked ? 'Unlock Card' : 'Lock Card'}</span>
-                                </button>
-                                <button className="btn-secondary" onClick={regenerateCard}>
-                                    <RefreshCw size={16} />
-                                    <span>Regenerate Details</span>
-                                </button>
-                            </div>
+
+                            {transactions.length === 0 ? (
+                                <div className="empty-transactions" style={{ textAlign: 'center', padding: '32px', color: 'var(--text-secondary)', background: 'white', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+                                    <p>No transactions yet.</p>
+                                    <p style={{ fontSize: '0.875rem', opacity: 0.7 }}>Transactions will appear here automatically.</p>
+                                </div>
+                            ) : (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    {transactions.map((tx) => (
+                                        <div key={tx.id} className="transaction-item slide-in-up">
+                                            <div className="merchant-info">
+                                                <div className="merchant-icon">
+                                                    <ShoppingBag size={18} />
+                                                </div>
+                                                <div>
+                                                    <span className="merchant-name">{tx.merchant}</span>
+                                                    <span className="transaction-date">{new Date(tx.date).toLocaleTimeString()}</span>
+                                                </div>
+                                            </div>
+                                            <span className="transaction-amount">-${tx.amount}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    <div className="transactions-section glass-card" style={{ height: 'fit-content' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                            <Activity size={20} color="var(--accent-color)" />
-                            <h3 style={{ margin: 0 }}>Recent Transactions</h3>
+                    <div className="card-controls">
+                        <div className="control-header">
+                            <h3>Card Settings</h3>
                         </div>
-
-                        {transactions.length === 0 ? (
-                            <div className="empty-transactions" style={{ textAlign: 'center', padding: '32px', color: 'var(--text-secondary)' }}>
-                                <p>No transactions yet.</p>
-                                <p style={{ fontSize: '0.875rem', opacity: 0.7 }}>Transactions will appear here automatically.</p>
-                            </div>
-                        ) : (
-                            <div className="transactions-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                {transactions.map((tx) => (
-                                    <div key={tx.id} className="transaction-item slide-in-right" style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '12px',
-                                        padding: '12px',
-                                        background: 'rgba(255,255,255,0.05)',
-                                        borderRadius: '12px'
+                        <div className="control-grid">
+                            <div className="control-item">
+                                <div className="control-label">
+                                    <span className={`status-badge ${card.locked ? 'locked' : 'active'}`} style={{
+                                        padding: '4px 12px',
+                                        borderRadius: '12px',
+                                        background: card.locked ? 'var(--error-bg)' : 'var(--success-bg)',
+                                        color: card.locked ? 'var(--error-color)' : 'var(--success-color)',
+                                        fontWeight: '600',
+                                        fontSize: '0.875rem'
                                     }}>
-                                        <div className="tx-icon" style={{
-                                            background: 'rgba(56, 189, 248, 0.2)',
-                                            padding: '8px',
-                                            borderRadius: '8px',
-                                            color: '#38bdf8'
-                                        }}>
-                                            <ShoppingBag size={16} />
-                                        </div>
-                                        <div className="tx-details" style={{ flex: 1 }}>
-                                            <div className="tx-merchant" style={{ fontWeight: '600' }}>{tx.merchant}</div>
-                                            <div className="tx-date" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                                                {new Date(tx.date).toLocaleTimeString()}
-                                            </div>
-                                        </div>
-                                        <div className="tx-amount" style={{ fontWeight: '600' }}>-${tx.amount}</div>
-                                    </div>
-                                ))}
+                                        {card.locked ? 'Locked' : 'Active'}
+                                    </span>
+                                </div>
+                                <button className="btn-secondary" onClick={toggleLock} style={{ width: '100%' }}>
+                                    {card.locked ? <Unlock size={16} /> : <Lock size={16} />}
+                                    <span style={{ marginLeft: '8px' }}>{card.locked ? 'Unlock' : 'Lock'}</span>
+                                </button>
                             </div>
-                        )}
+                            <div className="control-item">
+                                <button className="btn-secondary" onClick={regenerateCard} style={{ width: '100%' }}>
+                                    <RefreshCw size={16} />
+                                    <span style={{ marginLeft: '8px' }}>Regenerate</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

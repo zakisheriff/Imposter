@@ -100,9 +100,9 @@ const TempPhone = () => {
             </div>
 
             {!number ? (
-                <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '48px' }}>
+                <div className="empty-state card" style={{ textAlign: 'center', padding: '48px', maxWidth: '600px', margin: '40px auto' }}>
                     <div style={{ marginBottom: '24px', color: 'var(--accent-color)' }}>
-                        <Smartphone size={64} />
+                        <Smartphone size={64} strokeWidth={1.5} />
                     </div>
                     <h2 style={{ marginBottom: '12px' }}>No Active Number</h2>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
@@ -114,54 +114,70 @@ const TempPhone = () => {
                     </button>
                 </div>
             ) : (
-                <div className="phone-layout glass-card" style={{ padding: '0', display: 'flex', flexDirection: 'column', height: 'calc(100vh - 140px)' }}>
-                    <div className="phone-header" style={{ padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                        <div className="number-display">
+                <div className="phone-layout">
+                    <div className="phone-sidebar">
+                        <div className="current-number">
                             <span className="label">Your Number</span>
-                            <div className="number-box" style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '12px',
-                                background: 'rgba(0,0,0,0.2)',
-                                padding: '12px 16px',
-                                borderRadius: '12px',
-                                marginTop: '8px'
-                            }}>
-                                <h2 style={{ margin: 0, flex: 1 }}>{number}</h2>
+                            <div className="number-display">
+                                <code>{number}</code>
                                 <button
                                     className="btn-icon"
                                     onClick={handleCopy}
                                     title="Copy"
                                     style={{
-                                        color: copied ? '#86868b' : 'inherit',
-                                        transition: 'all 0.3s ease'
+                                        color: copied ? 'var(--success-color)' : 'inherit',
                                     }}
                                 >
                                     {copied ? <Check size={16} /> : <Copy size={16} />}
                                 </button>
                             </div>
                         </div>
+                        <div className="message-list">
+                            {/* Placeholder for conversation list if we had one */}
+                            <div style={{ padding: '16px', color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'center' }}>
+                                Waiting for messages...
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="sms-container" style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
-                        <SmsList messages={messages} />
-                    </div>
+                    <div className="phone-content">
+                        <div className="chat-header">
+                            <div className="chat-avatar">
+                                <Smartphone size={20} />
+                            </div>
+                            <div className="chat-info">
+                                <h3>Incoming Messages</h3>
+                                <span>Real-time SMS reception</span>
+                            </div>
+                        </div>
 
-                    <div className="sms-input-area" style={{ padding: '16px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                        <form onSubmit={sendTestMessage} style={{ display: 'flex', gap: '12px' }}>
-                            <input
-                                type="text"
-                                value={testMessage}
-                                onChange={(e) => setTestMessage(e.target.value)}
-                                placeholder="Simulate sending a message..."
-                                className="sms-input"
-                                style={{ flex: 1 }}
-                            />
-                            <button type="submit" className="btn-primary">
-                                <Send size={16} />
-                                <span>Send</span>
-                            </button>
-                        </form>
+                        <div className="chat-body">
+                            <SmsList messages={messages} />
+                        </div>
+
+                        <div className="chat-footer" style={{ padding: '16px', borderTop: '1px solid var(--divider-color)', background: 'white' }}>
+                            <form onSubmit={sendTestMessage} style={{ display: 'flex', gap: '12px' }}>
+                                <input
+                                    type="text"
+                                    value={testMessage}
+                                    onChange={(e) => setTestMessage(e.target.value)}
+                                    placeholder="Simulate receiving a message..."
+                                    className="sms-input"
+                                    style={{
+                                        flex: 1,
+                                        padding: '10px 16px',
+                                        borderRadius: '24px',
+                                        border: '1px solid var(--border-color)',
+                                        outline: 'none',
+                                        fontSize: '0.9375rem'
+                                    }}
+                                />
+                                <button type="submit" className="btn-primary" style={{ borderRadius: '24px', padding: '10px 20px' }}>
+                                    <Send size={16} />
+                                    <span style={{ marginLeft: '8px' }}>Send</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             )}

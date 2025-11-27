@@ -4,58 +4,49 @@ import { LayoutDashboard, Mail, Smartphone, CreditCard, Settings } from 'lucide-
 import '../styles/layout.css';
 
 const Sidebar = () => {
-    // Shared style to remove underline and inherit text color
-    const linkStyle = {
-        textDecoration: 'none',
-        color: 'inherit' 
-    };
-
     return (
-        <aside className="sidebar glass-panel">
+        <aside className="sidebar">
             <div className="logo-container">
-                <h2>Imposter</h2>
+                <div className="logo-text">
+                    Imposter <span className="badge">Labs</span>
+                </div>
             </div>
             <nav>
-                <NavLink 
-                    to="/" 
+                <NavLink
+                    to="/"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                    style={linkStyle}
                 >
                     <LayoutDashboard size={20} />
                     <span>Dashboard</span>
                 </NavLink>
-                
-                <NavLink 
-                    to="/email" 
+
+                <NavLink
+                    to="/email"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                    style={linkStyle}
                 >
                     <Mail size={20} />
                     <span>Temp Email</span>
                 </NavLink>
-                
-                <NavLink 
-                    to="/phone" 
+
+                <NavLink
+                    to="/phone"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                    style={linkStyle}
                 >
                     <Smartphone size={20} />
                     <span>Temp Phone</span>
                 </NavLink>
-                
-                <NavLink 
-                    to="/card" 
+
+                <NavLink
+                    to="/card"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                    style={linkStyle}
                 >
                     <CreditCard size={20} />
                     <span>Virtual Card</span>
                 </NavLink>
-                
-                <NavLink 
-                    to="/settings" 
+
+                <NavLink
+                    to="/settings"
                     className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                    style={linkStyle}
                 >
                     <Settings size={20} />
                     <span>Settings</span>

@@ -105,9 +105,9 @@ const TempEmail = () => {
             </div>
 
             {!address ? (
-                <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '48px' }}>
+                <div className="empty-state card" style={{ textAlign: 'center', padding: '48px', maxWidth: '600px', margin: '40px auto' }}>
                     <div style={{ marginBottom: '24px', color: 'var(--accent-color)' }}>
-                        <Mail size={64} />
+                        <Mail size={64} strokeWidth={1.5} />
                     </div>
                     <h2 style={{ marginBottom: '12px' }}>No Active Inbox</h2>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
@@ -119,27 +119,18 @@ const TempEmail = () => {
                     </button>
                 </div>
             ) : (
-                <div className="email-layout" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '16px', height: 'calc(100vh - 140px)' }}>
-                    <div className="email-sidebar glass-card" style={{ display: 'flex', flexDirection: 'column', padding: '0', overflow: 'hidden' }}>
-                        <div className="current-email" style={{ padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="email-layout">
+                    <div className="email-sidebar">
+                        <div className="current-email">
                             <span className="label">Your Address</span>
-                            <div className="address-box" style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                background: 'rgba(0,0,0,0.2)',
-                                padding: '8px 12px',
-                                borderRadius: '8px',
-                                marginTop: '8px'
-                            }}>
+                            <div className="address-box">
                                 <code style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>{address}</code>
                                 <button
                                     className="btn-icon"
                                     onClick={handleCopy}
                                     title="Copy to clipboard"
                                     style={{
-                                        color: copied ? '#86868b' : 'inherit',
-                                        transition: 'all 0.3s ease'
+                                        color: copied ? 'var(--success-color)' : 'inherit',
                                     }}
                                 >
                                     {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -152,8 +143,8 @@ const TempEmail = () => {
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            borderBottom: '1px solid rgba(255,255,255,0.05)',
-                            background: 'rgba(0,0,0,0.1)'
+                            borderBottom: '1px solid var(--divider-color)',
+                            background: 'var(--bg-secondary)'
                         }}>
                             <span style={{ fontWeight: 600, fontSize: '0.8125rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Inbox</span>
                             <button
@@ -167,7 +158,7 @@ const TempEmail = () => {
                             </button>
                         </div>
 
-                        <div style={{ flex: 1, overflowY: 'auto' }}>
+                        <div className="email-list">
                             <EmailList
                                 messages={messages}
                                 selectedId={selectedMessage?.id}
@@ -175,7 +166,7 @@ const TempEmail = () => {
                             />
                         </div>
                     </div>
-                    <div className="email-content glass-card" style={{ padding: '0', overflow: 'hidden' }}>
+                    <div className="email-content">
                         <EmailView message={selectedMessage} />
                     </div>
                 </div>
