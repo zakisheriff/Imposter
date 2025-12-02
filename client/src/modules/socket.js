@@ -1,7 +1,9 @@
 import { io } from 'socket.io-client';
 
-// Auto-connects to the same host/port as the page served from (due to proxy in dev)
-const socket = io('/', {
+// Connect to backend URL from env, or default to current host (for dev proxy)
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || '/';
+
+const socket = io(SERVER_URL, {
     autoConnect: false,
 });
 

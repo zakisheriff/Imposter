@@ -20,7 +20,8 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
-    process.env.FRONTEND_URL || 'https://your-app.vercel.app'
+    process.env.FRONTEND_URL || 'https://your-app.vercel.app',
+    'https://imposter.theoneatom.com'
 ];
 
 app.use(cors({
