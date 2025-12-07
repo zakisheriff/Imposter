@@ -22,7 +22,10 @@ class InboxService {
             return this.domain;
         } catch (error) {
             console.error('[Mail.tm] Failed to fetch domains:', error.message);
-            throw error;
+            // Fallback to known working domain if API is down
+            console.log('[Mail.tm] Using fallback domain: comfythings.com');
+            this.domain = 'comfythings.com';
+            return this.domain;
         }
     }
 
