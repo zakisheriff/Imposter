@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { emailApi } from '../modules/api';
-import { joinRoom, onEmail } from '../modules/socket';
 import EmailView from '../components/EmailView';
 import { Mail, Trash2, RefreshCw, Copy, Inbox, Check } from 'lucide-react';
 import '../styles/email.css';
@@ -15,22 +14,33 @@ const TempEmail = () => {
     useEffect(() => {
         if (address) {
             loadMessages(address);
-            joinRoom('email', address);
 
-            const unsubscribe = onEmail((message) => {
-                setMessages(prev => [message, ...prev]);
-            });
+            // Auto-refresh messages every 10 seconds
+            const interval = setInterval(() => {
+                syncMessages(address);
+            }, 10000);
 
-            return () => unsubscribe();
+            return () => clearInterval(interval);
         }
     }, [address]);
 
     const loadMessages = async (addr) => {
         try {
             const res = await emailApi.getMessages(addr);
-            setMessages(res.messages);
+            setMessages(res.messages || []);
         } catch (err) {
-            console.error(err);
+            console.error('Failed to load messages:', err);
+        }
+    };
+
+    const syncMessages = async (addr) => {
+        try {
+            // Sync from 1secmail API to Supabase
+            await emailApi.sync(addr);
+            // Then load the updated messages
+            await loadMessages(addr);
+        } catch (err) {
+            console.error('Failed to sync messages:', err);
         }
     };
 
@@ -44,7 +54,8 @@ const TempEmail = () => {
             setSelectedMessage(null);
             setCopied(false);
         } catch (err) {
-            console.error(err);
+            console.error('Failed to create email:', err);
+            alert('Failed to create email. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -61,7 +72,7 @@ const TempEmail = () => {
                 setSelectedMessage(null);
                 setCopied(false);
             } catch (err) {
-                console.error(err);
+                console.error('Failed to delete inbox:', err);
             }
         }
     };
@@ -77,9 +88,9 @@ const TempEmail = () => {
     const handleRefresh = async () => {
         if (!address) return;
         setRefreshing(true);
-        // Ensure spinner shows for at least 500ms for better UX
+        // Sync and load messages
         await Promise.all([
-            loadMessages(address),
+            syncMessages(address),
             new Promise(resolve => setTimeout(resolve, 500))
         ]);
         setRefreshing(false);
@@ -187,8 +198,8 @@ const TempEmail = () => {
                                         onClick={() => handleSelectMessage(msg)}
                                     >
                                         <div className="email-sender">
-                                            <span>{msg.from}</span>
-                                            <span className="email-time">{new Date(msg.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                            <span>{msg.from_address || msg.from || 'Unknown'}</span>
+                                            <span className="email-time">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                         </div>
                                         <div className="email-subject">{msg.subject}</div>
                                     </div>
