@@ -39,18 +39,23 @@ class InboxService {
 
         try {
             // Create account on Mail.tm
+            console.log(`[Mail.tm] Attempting to create account: ${address}`);
             const response = await axios.post(`${this.baseUrl}/accounts`, {
                 address: address,
                 password: password
             });
+            console.log(`[Mail.tm] Account created successfully: ${address}`);
 
             // Get JWT token
+            console.log(`[Mail.tm] Requesting token for: ${address}`);
             const tokenResponse = await axios.post(`${this.baseUrl}/token`, {
                 address: address,
                 password: password
             });
+            console.log(`[Mail.tm] Token received for: ${address}`);
 
             // Store in Supabase
+            console.log(`[Supabase] Storing email address: ${address}`);
             const { data, error } = await supabase
                 .from('email_addresses')
                 .insert([{
@@ -62,13 +67,32 @@ class InboxService {
                 .select()
                 .single();
 
-            if (error) throw error;
+            if (error) {
+                console.error('[Supabase] Insert error:', error);
+                throw error;
+            }
 
-            console.log(`[Mail.tm] Created account: ${address}`);
+            console.log(`[Success] Email created: ${address}`);
             return { address, expiresAt: data.expires_at };
         } catch (error) {
             console.error('[Mail.tm] Failed to create account:', error.message);
-            throw new Error('Failed to generate email address');
+            console.error('[Mail.tm] Error details:', {
+                status: error.response?.status,
+                statusText: error.response?.statusText,
+                data: error.response?.data,
+                url: error.config?.url
+            });
+
+            // Provide helpful error message
+            if (error.response?.status === 500) {
+                throw new Error('Mail.tm service is currently unavailable. Please try again in a few minutes.');
+            } else if (error.response?.status === 422) {
+                throw new Error('Email address already exists or invalid. Please try again.');
+            } else if (error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
+                throw new Error('Cannot connect to Mail.tm service. Please check your internet connection.');
+            } else {
+                throw new Error(`Failed to generate email address: ${error.message}`);
+            }
         }
     }
 
